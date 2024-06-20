@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Summarization</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        function validateForm(){
+            var textarea = document.getElementsByName("document")[0];
+            var errorMessage = document.getElementById("error-message");
+            
+            if (textarea.value.length > 10000) {
+                errorMessage.textContent = "Character limit exceeded (10000 characters max).";
+                return false; // Prevent form submission
+            } else {
+                errorMessage.textContent = ""; // Clear any previous error message
+                return true; // Allow form submission
+            }
+        }
+        </script>
+        
+</head>
+<body>
+    <h1>Document Summarization System</h1>
+    <form action="/summarize" method="post" onsubmit="return validateForm()">
+        <textarea name="document" rows="10" cols="40" placeholder="Enter your document here"></textarea><br>
+        <div id="error-message" style="color: red;"></div>
+        <input type="submit" value="Summarize">
+        
+    </form>
+    <h2>Summary:</h2>
+    <p>{{ summary|safe }}</p>
+</body>
+</html>
